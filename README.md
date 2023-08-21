@@ -16,7 +16,7 @@ The Daybook API empowers you to capture your daily experiences, emotions, and re
 
 ### Installation 💻
 
-1. Clone the DiaryAPI repository from GitHub: git clone https://github.com/yourusername/diary-api.git
+1. Clone the DiaryAPI repository from GitHub: git clone `https://github.com/Deshan555/diaryAPI/tree/master`
 2. Navigate to the project directory: cd diary-api
 3. Build the Docker container for the PostgreSQL database: docker-compose up -d
 4. Run the Spring Boot application: ./mvnw spring-boot:run

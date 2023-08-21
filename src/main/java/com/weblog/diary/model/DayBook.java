@@ -1,9 +1,9 @@
 package com.weblog.diary.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-public class DayBook implements java.io.Serializable{
+public class DayBook implements java.io.Serializable {
     @Id
     @SequenceGenerator(
             name = "daybook_id_sequence",
@@ -18,7 +18,6 @@ public class DayBook implements java.io.Serializable{
     private Long id;
     private String title;
     private String content;
-    private String date;
     private String timestamp;
     private String location;
     private String mood;
@@ -48,14 +47,6 @@ public class DayBook implements java.io.Serializable{
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getTimestamp() {
@@ -96,7 +87,6 @@ public class DayBook implements java.io.Serializable{
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", date='" + date + '\'' +
                 ", timestamp='" + timestamp + '\'' +
                 ", location='" + location + '\'' +
                 ", mood='" + mood + '\'' +

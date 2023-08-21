@@ -1,15 +1,15 @@
 services:
   db:
-    container_name: postgres
+    container_name: postgresDb
     image: postgres
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: root
       PGDATA: /data/postgres
     volumes:
       - db:/data/postgres
     ports:
-      - "5332:5432"
+      - "5333:5433"
     networks:
       - db
     restart: unless-stopped

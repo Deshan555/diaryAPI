@@ -1,6 +1,8 @@
-# Daybook API Documentation 📔
+# diaryAPI Documentation 📔
 
 Welcome to the Daybook API documentation! 🚀 This API allows you to manage your daybook entries, recording your thoughts, moods, and experiences. Keep track of your journey with ease! 🌟
+
+![alt text](https://github.com/Deshan555/diaryAPI/blob/master/architecture.png)
 
 ## Introduction 📝
 
@@ -14,13 +16,30 @@ The Daybook API empowers you to capture your daily experiences, emotions, and re
 
 ### Installation 💻
 
-1. Clone the Daybook API repository from GitHub: `git clone https://github.com/yourusername/daybook-api.git`
-2. Navigate to the project directory: `cd daybook-api`
-3. Run the Spring Boot application: `./mvnw spring-boot:run`
+1. Clone the DiaryAPI repository from GitHub: git clone https://github.com/yourusername/diary-api.git
+2. Navigate to the project directory: cd diary-api
+3. Build the Docker container for the PostgreSQL database: docker-compose up -d
+4. Run the Spring Boot application: ./mvnw spring-boot:run
 
 The API is now up and running! 🎉
 
 ## API Endpoints 🛤️
+
+### Add Entry 📝
+
+Add a new daybook entry.
+
+- **Endpoint:** POST `/api/v1/daybook/add`
+- **Request Body:**
+    ```json
+    {
+        "title": "New Entry",
+        "content": "This is a new entry...",
+        "location": "Suburb",
+        "mood": "Excited"
+    }
+    ```
+- **Response:** Newly created entry details.
 
 ### Update Entry ✏️
 
@@ -40,25 +59,7 @@ Update an existing daybook entry.
     }
     ```
 - **Response:** Updated entry details.
-
-### Add Entry 📝
-
-Add a new daybook entry.
-
-- **Endpoint:** POST `/api/v1/daybook/add`
-- **Request Body:**
-    ```json
-    {
-        "title": "New Entry",
-        "content": "This is a new entry...",
-        "timestamp": "2023-08-22T10:00:00Z",
-        "location": "Suburb",
-        "mood": "Excited",
-        "entryCode": "FGHIJ67890"
-    }
-    ```
-- **Response:** Newly created entry details.
-
+  
 ### Find Entry by ID 🔍
 
 Retrieve a specific daybook entry by its ID.
@@ -82,8 +83,7 @@ Delete a daybook entry by its ID.
 
 ## Swagger Documentation 📖
 
-Explore and test the API using the interactive Swagger documentation. Access it by navigating to [Swagger UI](http://localhost:8080/swagger-ui.html) once the API is running.
-
+Explore and test the API using the interactive Swagger documentation. Access it by navigating to [Swagger UI](http://localhost:8083/swagger-ui/index.html#/controller/getContentByID) once the API is running.`http://localhost:8083/swagger-ui/index.html#/controller/getContentByID`
 ## Error Codes ❌
 
 The API may return the following error codes:

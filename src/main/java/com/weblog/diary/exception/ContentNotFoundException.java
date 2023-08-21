@@ -1,6 +1,7 @@
 package com.weblog.diary.exception;
 
-public class ContentNotFoundException {
-    public ContentNotFoundException(String s) {
+public class ContentNotFoundException extends RuntimeException{
+    public ContentNotFoundException(String errorMessage) {
+        super(errorMessage);
     }
 }

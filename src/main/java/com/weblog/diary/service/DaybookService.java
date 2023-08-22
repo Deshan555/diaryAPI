@@ -4,6 +4,7 @@ import com.weblog.diary.exception.ContentNotFoundException;
 import com.weblog.diary.model.DayBook;
 import com.weblog.diary.repo.DayBookRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -39,7 +40,13 @@ public class DaybookService {
         return dayBookRepo.findDayBookById(id).orElseThrow(() -> new ContentNotFoundException("Content by id " + id + " was not found"));
     }
 
-    public void dropContent(Long id) {
-        dayBookRepo.deleteDayBookById(id);
+    public ResponseEntity<String> dropContent(Long id) {
+        boolean available = dayBookRepo.existsById(id);
+        if (available) {
+            dayBookRepo.deleteById(id);
+            return ResponseEntity.ok("{'message': 'Content deleted', 'id': " + id + "}");
+        } else {
+            return ResponseEntity.ok("{'message': 'Content with ID " + id + " not found'}");
+        }
     }
 }

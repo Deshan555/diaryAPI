@@ -1,5 +1,6 @@
 package com.weblog.diary.controller;
 
+import com.weblog.diary.exception.ContentNotFoundException;
 import com.weblog.diary.model.DayBook;
 import com.weblog.diary.service.DaybookService;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,12 @@ public class Controller {
 
     @PostMapping("/add")
     public ResponseEntity<DayBook> addContent(@RequestBody DayBook dayBook) {
-        DayBook newDayBook = dayBookService.addContent(dayBook);
-        return new ResponseEntity<>(newDayBook, HttpStatus.CREATED);
+        try{
+            DayBook newDayBook = dayBookService.addContent(dayBook);
+            return new ResponseEntity<>(newDayBook, HttpStatus.CREATED);
+        }catch(Exception error){
+            return new ResponseEntity("{'error':'data too long for insert'}", HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/all")
@@ -30,9 +35,13 @@ public class Controller {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<DayBook> getContentByID(@PathVariable("id") Long id) {
-        DayBook dayBook = dayBookService.findContentById(id);
-        return new ResponseEntity<>(dayBook, HttpStatus.OK);
+    public ResponseEntity<?> getContentByID(@PathVariable("id") Long id) {
+        try{
+            DayBook dayBook = dayBookService.findContentById(id);
+            return new ResponseEntity<>(dayBook, HttpStatus.OK);
+        }catch(Exception error){
+            return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping("/update")
@@ -43,8 +52,7 @@ public class Controller {
 
     @DeleteMapping("/drop/{id}")
     public ResponseEntity<?> updateContent(@PathVariable("id") Long id) {
-        dayBookService.dropContent(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return dayBookService.dropContent(id);
     }
 
 

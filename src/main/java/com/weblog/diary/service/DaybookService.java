@@ -32,10 +32,23 @@ public class DaybookService {
         return dayBookRepo.findAll();
     }
 
-    public DayBook updateContent(DayBook dayBook) {
-        return dayBookRepo.save(dayBook);
-    }
+    /*public DayBook updateContent(DayBook dayBook) {
+        Long id = dayBook.getId();
+        if(dayBookRepo.existsById(id)){
+            return dayBookRepo.save(dayBook);
+        }
 
+    }*/
+    public ResponseEntity<?> updateContent(DayBook dayBook) {
+        Long id = dayBook.getId();
+        if (dayBookRepo.existsById(id)) {
+            DayBook updatedEntry = dayBookRepo.save(dayBook);
+            return ResponseEntity.ok(updatedEntry);
+        } else {
+            return ResponseEntity.badRequest()
+                    .body("{'error': 'Content with ID " + id + " not found'}");
+        }
+    }
     public DayBook findContentById(Long id) {
         return dayBookRepo.findDayBookById(id).orElseThrow(() -> new ContentNotFoundException("Content by id " + id + " was not found"));
     }

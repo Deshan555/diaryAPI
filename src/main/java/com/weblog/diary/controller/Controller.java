@@ -45,9 +45,8 @@ public class Controller {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<DayBook> updateContent(@RequestBody DayBook dayBook) {
-        DayBook updateDayBook = dayBookService.updateContent(dayBook);
-        return new ResponseEntity<>(updateDayBook, HttpStatus.OK);
+    public ResponseEntity<?> updateContent(@RequestBody DayBook dayBook) {
+        return dayBookService.updateContent(dayBook);
     }
 
     @DeleteMapping("/drop/{id}")

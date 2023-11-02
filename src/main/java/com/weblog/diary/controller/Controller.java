@@ -19,12 +19,12 @@ public class Controller {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DayBook> addContent(@RequestBody DayBook dayBook) {
-        try{
+    public ResponseEntity<?> addContent(@RequestBody DayBook dayBook) {
+        try {
             DayBook newDayBook = dayBookService.addContent(dayBook);
             return new ResponseEntity<>(newDayBook, HttpStatus.CREATED);
-        }catch(Exception error){
-            return new ResponseEntity("{'error':'data too long for insert'}", HttpStatus.NOT_ACCEPTABLE);
+        } catch (Exception error) {
+            return new ResponseEntity<>("Data too long for insert", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -36,23 +36,45 @@ public class Controller {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<?> getContentByID(@PathVariable("id") Long id) {
-        try{
+        try {
             DayBook dayBook = dayBookService.findContentById(id);
-            return new ResponseEntity<>(dayBook, HttpStatus.OK);
-        }catch(Exception error){
-            return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+            if (dayBook != null) {
+                return new ResponseEntity<>(dayBook, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception error) {
+            return new ResponseEntity("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<?> updateContent(@RequestBody DayBook dayBook) {
-        return dayBookService.updateContent(dayBook);
+        try {
+            // Check if the content exists before updating
+            DayBook existingContent = dayBookService.findContentById(dayBook.getId());
+            if (existingContent != null) {
+                return dayBookService.updateContent(dayBook);
+            } else {
+                return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception error) {
+            return new ResponseEntity("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/drop/{id}")
-    public ResponseEntity<?> updateContent(@PathVariable("id") Long id) {
-        return dayBookService.dropContent(id);
+    public ResponseEntity<?> deleteContent(@PathVariable("id") Long id) {
+        try {
+            // Check if the content exists before deleting
+            DayBook existingContent = dayBookService.findContentById(id);
+            if (existingContent != null) {
+                return dayBookService.dropContent(id);
+            } else {
+                return new ResponseEntity<>("Content not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception error) {
+            return new ResponseEntity("An error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-
 }
